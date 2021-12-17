@@ -1,0 +1,6 @@
+{
+    "path": "/404",
+    "body": "index.js",
+    "stylesheets": ["style.css"],
+    "scripts": ["script.js"]
+}
