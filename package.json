@@ -53,10 +53,10 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
+    "src/**/*.{js,ts,tsx}": [
       "prettier --config .prettierrc --write",
-      "eslint --fix \"src/**/*.{ts,tsx}\"",
-      "eslint \"src/**/*.{ts,tsx}\""
+      "eslint --fix \"src/**/*.{js,ts,tsx}\"",
+      "eslint \"src/**/*.{js,ts,tsx}\""
     ]
   },
   "commitlint": {
