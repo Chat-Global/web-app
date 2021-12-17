@@ -1,1 +1,1 @@
-document.title = 'No se ha encontrado la pagina'
+document.title = 'No se ha encontrado la pagina.';

@@ -2,7 +2,7 @@ export {};
 
 module.exports = (ctx) => /*html*/ `
   <div class="container">
-    <a href="https://chatglobal.tnfangel.ml/" class="brand"><img src="/assets/logo.png" alt="Logo" width="140" height="140"></a>
+    <a href="https://chatglobal.ml/" class="brand"><img src="https://cdn.chatglobal.ml/assets/logo.png" alt="Logo" width="140" height="140"></a>
 
     <h2>Chat Global</h2>
     <h1>El bot de interchat.</h1>
