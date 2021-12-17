@@ -2,9 +2,9 @@ export {};
 
 const { Router } = require('express');
 const router = Router();
-const version = require('../../package.json').version;
+const { version } = require('../../package.json');
 
-router.get('/', (req, res) => {
+router.get('/', (req: any, res: any): void => {
 	res.json({ version: version });
 });
 

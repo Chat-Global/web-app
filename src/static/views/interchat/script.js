@@ -1,1 +1,1 @@
-document.title = 'Ver post'
+document.title = 'Ver post';

@@ -30,12 +30,12 @@ app.use('/api', require('./api/index'));
 app.use('/api/spa', require('./api/spa'));
 
 // SPA File
-app.get('/*', (req, res) => {
+app.get('/*', (req: any, res: any): void => {
 	res.sendFile('index.html', { root: join(__dirname, './static/html/') });
 });
 
 // Iniciando el servidor
 
-server.listen(app.get('port'), () => {
+server.listen(app.get('port'), (): void => {
 	console.log(`Server listening on port ${app.get('port')}`);
 });

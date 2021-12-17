@@ -1,1 +1,1 @@
-document.title = 'Inicio'
+document.title = 'Inicio';

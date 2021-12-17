@@ -27,10 +27,10 @@ const getHTML = async (pathname) => {
 window.addEventListener('popstate', router);
 
 document.addEventListener('DOMContentLoaded', () => {
-	document.body.addEventListener('click', (e) => {
-		const link = e.target.closest('a[data-link]');
-		if (link != null) {
-			e.preventDefault();
+	document.body.addEventListener('click', (event) => {
+		const link = event.target.closest('a[data-link]');
+		if (link !== null) {
+			event.preventDefault();
 			navigateTo(link.getAttribute('href'));
 		}
 	});
@@ -39,5 +39,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	setTimeout(() => {
 		$('#load-screen').remove();
-	}, 2000);
+	}, 2500);
 });
