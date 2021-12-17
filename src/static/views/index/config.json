@@ -1,6 +1,6 @@
 {
     "path": "/",
-    "body": "index.js",
+    "body": "index.ts",
     "stylesheets": ["style.css"],
     "scripts": ["script.js"]
 }
