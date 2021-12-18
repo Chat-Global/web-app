@@ -59,7 +59,7 @@ for (const dir of readdirSync('./src/static/views')) {
 		dir: dir,
 		body: dirConfig.body,
 		scripts: dirScripts,
-		stylesheet: dirStylesheets
+		stylesheets: dirStylesheets
 	});
 }
 
@@ -96,9 +96,11 @@ router.post('/', (req, res) => {
 		})
 	);
 
-	const html = `${body}${route.stylesheet.map(
-		(stylesheet) => `<style>${stylesheet}</style>`
-	)}${route.scripts.map((script) => `<script>${script}</script>`)}`;
+	const html = `${body}${route.stylesheets
+		.map((stylesheet) => `<style>${stylesheet}</style>`)
+		.join('\n')}${route.scripts
+		.map((script) => `<script>${script}</script>`)
+		.join('\n')}`;
 
 	res.json({ pathname: pathname, route: route, params: params, html: html });
 });

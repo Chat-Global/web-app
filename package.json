@@ -1,7 +1,7 @@
 {
-  "name": "chat-global-desktop-web-app",
+  "name": "chat-global-web-app",
   "version": "1.0.0",
-  "description": "Chat Global Desktop Web App",
+  "description": "Chat Global Web App",
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",

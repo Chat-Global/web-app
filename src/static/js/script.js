@@ -39,5 +39,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	setTimeout(() => {
 		$('#load-screen').remove();
-	}, 2500);
+	}, 4500);
 });
