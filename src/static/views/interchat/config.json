@@ -2,5 +2,6 @@
     "path": "/interchat/:id",
     "body": "index.ts",
     "stylesheets": ["style.css"],
-    "scripts": ["script.js"]
+    "cdnScripts": [],
+    "scripts": ["socket.io.js","script.js"]
 }

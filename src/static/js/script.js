@@ -35,9 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
+	$('#app').css('display', 'none');
+
 	router();
 
 	setTimeout(() => {
+		$('#app').css('display', 'block');
 		$('#load-screen').remove();
-	}, 4500);
+	}, 2000);
 });

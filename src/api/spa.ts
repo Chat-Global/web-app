@@ -34,6 +34,8 @@ for (const dir of readdirSync('./src/static/views')) {
 
 	const dirStylesheets = [];
 
+	const dirCDNScripts = [];
+
 	const dirScripts = [];
 
 	dirConfig.stylesheets.forEach((stylesheet) => {
@@ -44,6 +46,10 @@ for (const dir of readdirSync('./src/static/views')) {
 				).toString()
 			).css
 		);
+	});
+
+	dirConfig.cdnScripts.forEach((url) => {
+		dirCDNScripts.push(url);
 	});
 
 	dirConfig.scripts.forEach((script) => {
@@ -58,6 +64,7 @@ for (const dir of readdirSync('./src/static/views')) {
 		path: dirConfig.path,
 		dir: dir,
 		body: dirConfig.body,
+		cdnScripts: dirCDNScripts,
 		scripts: dirScripts,
 		stylesheets: dirStylesheets
 	});
@@ -98,6 +105,8 @@ router.post('/', (req, res) => {
 
 	const html = `${body}${route.stylesheets
 		.map((stylesheet) => `<style>${stylesheet}</style>`)
+		.join('\n')}${route.cdnScripts
+		.map((url) => `<script src="${url}"></script>`)
 		.join('\n')}${route.scripts
 		.map((script) => `<script>${script}</script>`)
 		.join('\n')}`;

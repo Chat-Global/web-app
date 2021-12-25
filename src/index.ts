@@ -27,7 +27,13 @@ app.use('/static', express.static('./src/static'));
 
 // API Routes
 app.use('/api', require('./api/index'));
+
 app.use('/api/spa', require('./api/spa'));
+
+// Robots
+app.get('/robots.txt', (req: any, res: any): void => {
+	res.sendFile('robots.txt', { root: join(__dirname, './static/other/') });
+});
 
 // SPA File
 app.get('/*', (req: any, res: any): void => {
