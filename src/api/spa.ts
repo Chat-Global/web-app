@@ -1,8 +1,6 @@
 export {};
 
-const minifyHTML = require('htmlclean');
-const { minify: minifyCSS } = require('csso');
-const { minify: minifyJS } = require('uglify-js');
+const { minify } = require('html-minifier');
 const { readdirSync, readFileSync } = require('fs');
 const { Router } = require('express');
 const router = Router();
@@ -34,29 +32,21 @@ for (const dir of readdirSync('./src/static/views')) {
 
 	const dirStylesheets = [];
 
-	const dirCDNScripts = [];
-
 	const dirScripts = [];
 
 	dirConfig.stylesheets.forEach((stylesheet) => {
 		dirStylesheets.push(
-			minifyCSS(
-				readFileSync(
-					`./src/static/views/${dir}/${stylesheet}`
-				).toString()
-			).css
+			readFileSync(
+				`./src/static/views/${dir}/stylesheets/${stylesheet}`
+			).toString()
 		);
-	});
-
-	dirConfig.cdnScripts.forEach((url) => {
-		dirCDNScripts.push(url);
 	});
 
 	dirConfig.scripts.forEach((script) => {
 		dirScripts.push(
-			minifyJS(
-				readFileSync(`./src/static/views/${dir}/${script}`).toString()
-			).code
+			readFileSync(
+				`./src/static/views/${dir}/scripts/${script}`
+			).toString()
 		);
 	});
 
@@ -64,7 +54,6 @@ for (const dir of readdirSync('./src/static/views')) {
 		path: dirConfig.path,
 		dir: dir,
 		body: dirConfig.body,
-		cdnScripts: dirCDNScripts,
 		scripts: dirScripts,
 		stylesheets: dirStylesheets
 	});
@@ -95,21 +84,19 @@ router.post('/', (req, res) => {
 
 	const params = getParams(match);
 
-	const body = minifyHTML(
-		require(`../static/views/${route.dir}/${route.body}`)({
-			pathname: pathname,
-			route: route,
-			params: params
-		})
-	);
+	const body = require(`../static/views/${route.dir}/${route.body}`)({
+		pathname: pathname,
+		route: route,
+		params: params
+	});
 
-	const html = `${body}${route.stylesheets
-		.map((stylesheet) => `<style>${stylesheet}</style>`)
-		.join('\n')}${route.cdnScripts
-		.map((url) => `<script src="${url}"></script>`)
-		.join('\n')}${route.scripts
-		.map((script) => `<script>${script}</script>`)
-		.join('\n')}`;
+	const html = minify(
+		`${body}${route.stylesheets.join('\n')}${route.scripts.join('\n')}`,
+		{
+			minifyCSS: true,
+			minifyJS: true
+		}
+	);
 
 	res.json({ pathname: pathname, route: route, params: params, html: html });
 });

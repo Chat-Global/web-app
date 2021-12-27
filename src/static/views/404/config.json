@@ -1,7 +1,6 @@
 {
     "path": "/404",
     "body": "index.ts",
-    "stylesheets": ["style.css"],
-    "cdnScripts": [],
-    "scripts": ["script.js"]
+    "stylesheets": ["style.html"],
+    "scripts": ["script.html"]
 }

@@ -1,7 +1,6 @@
 {
-    "path": "/",
+    "path": "/login",
     "body": "index.ts",
     "stylesheets": ["style.html"],
-    "cdnScripts": [],
     "scripts": ["script.html"]
 }

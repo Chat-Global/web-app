@@ -1,7 +1,6 @@
 {
-    "path": "/",
+    "path": "/register",
     "body": "index.ts",
     "stylesheets": ["style.html"],
-    "cdnScripts": [],
     "scripts": ["script.html"]
 }
