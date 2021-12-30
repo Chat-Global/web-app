@@ -1,5 +1,4 @@
 export {};
-
 const csrf = require('csurf');
 const morgan = require('morgan');
 const { join } = require('path');
@@ -42,7 +41,6 @@ app.all('*', (req: any, res: any, next: any): void => {
 
 // API Routes
 app.use('/api', require('./api/index'));
-
 app.use('/api/spa', require('./api/spa'));
 
 // Robots
@@ -68,47 +66,23 @@ app.get('/register', (req: any, res: any): void => {
 });
 
 // SPA File
-app.get('/*', (req: any, res: any): void => {
+app.get('/*', async (req: any, res: any): Promise<void> => {
 	const sessionCookie = req.cookies.session || '';
 
-	admin
+	const userData = await admin
 		.auth()
 		.verifySessionCookie(sessionCookie, true)
-		.then((userData) => {
-			console.log(
-				'Logged in:',
-				userData.email,
-				JSON.stringify(userData, null, 2)
-			);
-			res.sendFile('index.html', {
-				root: join(__dirname, './static/html/')
-			});
-		})
-		.catch((e) => {
-			res.redirect('/login');
+		.catch(() => false);
+
+	if (userData) {
+		console.log('Logged in:', userData.email);
+
+		res.sendFile('index.html', {
+			root: join(__dirname, './static/html/')
 		});
-});
-
-app.post('/sessionLogin', (req: any, res: any): void => {
-	if (!req.body.idToken) res.status(400).send('Malformed Request');
-
-	const idToken = req.body.idToken.toString();
-
-	const expiresIn = 60 * 60 * 24 * 5 * 1000;
-
-	admin
-		.auth()
-		.createSessionCookie(idToken, { expiresIn })
-		.then(
-			(sessionCookie) => {
-				const options = { maxAge: expiresIn, httpOnly: true };
-				res.cookie('session', sessionCookie, options);
-				res.end(JSON.stringify({ status: 'success' }));
-			},
-			() => {
-				res.status(401).send('Unauthorized.');
-			}
-		);
+	} else {
+		res.redirect('/login');
+	}
 });
 
 // Iniciando el servidor

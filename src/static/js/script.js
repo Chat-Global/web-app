@@ -5,7 +5,15 @@ const navigateTo = (url) => {
 };
 
 const router = async () => {
-	$('#app').html(await getHTML(location.pathname).then((data) => data.html));
+	const data = await getHTML(location.pathname);
+	document.getElementById('app').innerHTML = `${data.html}${data.css.join(
+		''
+	)}`;
+	data.js.forEach((code) => {
+		const script = document.createElement('script');
+		script.innerHTML = code;
+		document.body.appendChild(script);
+	});
 };
 
 const getHTML = async (pathname) => {
@@ -26,7 +34,7 @@ const getHTML = async (pathname) => {
 
 window.addEventListener('popstate', router);
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 	document.body.addEventListener('click', (event) => {
 		const link = event.target.closest('a[data-link]');
 		if (link !== null) {
@@ -37,10 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	$('#app').css('display', 'none');
 
-	router();
+	await router();
 
 	setTimeout(() => {
 		$('#app').css('display', 'block');
 		$('#load-screen').remove();
 	}, 2000);
 });
+
+const connections = [];

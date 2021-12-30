@@ -2,5 +2,5 @@
     "path": "/register",
     "body": "index.ts",
     "stylesheets": ["style.html"],
-    "scripts": ["script.html"]
+    "scripts": ["script.js"]
 }

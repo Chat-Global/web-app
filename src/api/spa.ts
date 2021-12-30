@@ -1,6 +1,8 @@
 export {};
 
-const { minify } = require('html-minifier');
+const { minify: minifyHTML } = require('html-minifier');
+const { minify: minifyCSS } = require('csso');
+const { minify: minifyJS } = require('uglify-js');
 const { readdirSync, readFileSync } = require('fs');
 const { Router } = require('express');
 const router = Router();
@@ -35,18 +37,32 @@ for (const dir of readdirSync('./src/static/views')) {
 	const dirScripts = [];
 
 	dirConfig.stylesheets.forEach((stylesheet) => {
+		const splittedStylesheet = readFileSync(
+			`./src/static/views/${dir}/stylesheets/${stylesheet}`
+		)
+			.toString()
+			.split('\n');
+
+		const minifyStylesheet = minifyCSS(
+			splittedStylesheet
+				.slice(1, splittedStylesheet.length - 1)
+				.join('\n')
+		).css;
+
 		dirStylesheets.push(
-			readFileSync(
-				`./src/static/views/${dir}/stylesheets/${stylesheet}`
-			).toString()
+			`${splittedStylesheet[0]}${minifyStylesheet}${
+				splittedStylesheet[splittedStylesheet.length - 1]
+			}`
 		);
 	});
 
 	dirConfig.scripts.forEach((script) => {
 		dirScripts.push(
-			readFileSync(
-				`./src/static/views/${dir}/scripts/${script}`
-			).toString()
+			minifyJS(
+				readFileSync(
+					`./src/static/views/${dir}/scripts/${script}`
+				).toString()
+			).code
 		);
 	});
 
@@ -90,15 +106,20 @@ router.post('/', (req, res) => {
 		params: params
 	});
 
-	const html = minify(
-		`${body}${route.stylesheets.join('\n')}${route.scripts.join('\n')}`,
-		{
-			minifyCSS: true,
-			minifyJS: true
-		}
-	);
+	const html = minifyHTML(body, {
+		collapseWhitespace: true,
+		minifyCSS: true,
+		minifyJS: true
+	});
 
-	res.json({ pathname: pathname, route: route, params: params, html: html });
+	res.json({
+		pathname: pathname,
+		route: route,
+		params: params,
+		html: html,
+		css: route.stylesheets,
+		js: route.scripts
+	});
 });
 
 module.exports = router;

@@ -118,12 +118,19 @@
         margin: 8px 8px 8px 25px;
         display: inline-block;
         vertical-align: top;
+        position: absolute;
     }
 
     .message-container {
         display: inline-block;
         vertical-align: top;
-        padding: 1px;
+        padding: 8px 8px 8px 100px;
+        max-width: 100%;
+    }
+
+    .chat-badge {
+        background-color: #5865F2 !important;
+        font-size: 10px;
     }
 
     .interchat-message-avatar {
@@ -276,7 +283,7 @@
         }
     }
 
-    @media only screen and (max-width: 1700px) {
+    @media only screen and (max-width: 1400px) {
 
         .avatar-container {
             width: 5vw;
@@ -319,12 +326,56 @@
             width: 10%;
         }
     }
-
     @media only screen and (max-width: 1000px) {
+
+
+        .avatar-container {
+            width: 5vw;
+            height: 5vw;
+        }
+
+        body {
+            font-size: 12px;
+        }
+
+        .interchat-bar-icon {
+            font-size: 1.5vw;
+        }
+
+        #interchat-menu-card {
+            width: 20%;
+        }
+
+        #interchat-messages-panel-card {
+            width: 55%;
+        }
+
+        #interchat-members-card {
+            width: 40%;
+        }
+
+        #attachments-div {
+            width: 10%;
+        }
+
+        #message-input-box {
+            width: 60%;
+        }
+
+        #emojis-div {
+            width: 10%;    
+        }
+        
+        #send-div {
+            width: 10%;
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
 
         body {
             overflow-x: scroll;
-            font-size: 12px;
+            font-size: 8px;
         }
 
         .avatar-container {
@@ -363,6 +414,19 @@
 
         #interchat-members-card {
             width: 55%;
+        }
+    }
+
+
+    @media only screen and (max-width: 450px) {
+
+        body {
+            font-size: 5px !important;
+        }
+
+        .avatar-container {
+            width: 15vw;
+            height: 15vw;
         }
     }
 </style>
