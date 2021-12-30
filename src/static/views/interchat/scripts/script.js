@@ -18,7 +18,7 @@
 
 	const socket = io('wss://gateway.chatglobal.ml', {
 		auth: {
-			token: 'pene'
+			token: localStorage.getItem('token')
 		}
 	});
 

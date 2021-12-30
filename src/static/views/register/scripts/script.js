@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable no-undef */
-document.title = 'Register';
 $(() => {
+	document.title = 'Register';
 	$('#error_notification').css('display', 'none');
 	$('#register').submit((event) => {
 		event.preventDefault();

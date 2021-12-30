@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable no-undef */
-document.title = 'Log in';
 $(() => {
+	document.title = 'Log in';
 	$('#error_notification').css('display', 'none');
 	$('#login').submit((event) => {
 		event.preventDefault();
