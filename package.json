@@ -9,7 +9,6 @@
     "lint": "yarn eslint .",
     "fix": "yarn eslint --fix .",
     "pretty": "yarn prettier --write .",
-    "postinstall": "yarn run husky install",
     "commit": "lint-staged && yarn git-cz",
     "check": "yarn run ncu -p yarn --color",
     "update": "yarn run ncu -i -p yarn --color"

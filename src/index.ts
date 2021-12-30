@@ -8,7 +8,7 @@ const { createServer } = require('http');
 const { mw: reqIPMW } = require('request-ip');
 const cookieParser = require('cookie-parser');
 
-const serviceAccount = require('./serviceAccountKey.json');
+const serviceAccount = JSON.parse(process.env.cert);
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount)
