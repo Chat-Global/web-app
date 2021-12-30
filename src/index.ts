@@ -1,4 +1,5 @@
 export {};
+require('dotenv').config();
 const csrf = require('csurf');
 const morgan = require('morgan');
 const { join } = require('path');

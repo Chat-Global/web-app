@@ -23,11 +23,15 @@ $(() => {
 				}
 			}),
 			success: (resp) => {
-				if (resp && resp.responseJSON && resp.responseJSON.redirect) {
-					localStorage.setItem('token', resp.responseJSON.token);
-					const sessionCookie = resp.responseJSON.sessionCookie;
-					document.cookie = `${sessionCookie.name}=${sessionCookie.value}; max-age=${sessionCookie.maxAge}; SameSite=lax; Secure`;
-					window.location.assign(resp.responseJSON.redirect);
+				localStorage.setItem('token', resp.token);
+				const sessionCookie = resp.sessionCookie;
+				Cookies.set(sessionCookie.name, sessionCookie.value, {
+					secure: true,
+					sameSite: 'lax',
+					expires: 5
+				});
+				if (resp.redirect) {
+					window.location.assign(resp.redirect);
 				} else {
 					window.location.assign('/');
 				}
