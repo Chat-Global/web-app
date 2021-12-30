@@ -24,6 +24,9 @@ $(() => {
 			}),
 			success: (resp) => {
 				if (resp && resp.responseJSON && resp.responseJSON.redirect) {
+					localStorage.setItem('token', resp.responseJSON.token);
+					const sessionCookie = resp.responseJSON.sessionCookie;
+					document.cookie = `${sessionCookie.name}=${sessionCookie.value}; max-age=${sessionCookie.maxAge}; SameSite=lax; Secure`;
 					window.location.assign(resp.responseJSON.redirect);
 				} else {
 					window.location.assign('/');
