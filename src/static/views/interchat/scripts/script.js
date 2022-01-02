@@ -134,7 +134,7 @@
 		}
 	};
 
-	setInterval(checkConnection, 5000);
+	setTimeout(checkConnection, 5000);
 
 	socket.on('MESSAGE_CREATE', messageFunction);
 
