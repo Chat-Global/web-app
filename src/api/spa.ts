@@ -37,22 +37,12 @@ for (const dir of readdirSync('./src/static/views')) {
 	const dirScripts = [];
 
 	dirConfig.stylesheets.forEach((stylesheet) => {
-		const splittedStylesheet = readFileSync(
-			`./src/static/views/${dir}/stylesheets/${stylesheet}`
-		)
-			.toString()
-			.split('\n');
-
-		const minifyStylesheet = minifyCSS(
-			splittedStylesheet
-				.slice(1, splittedStylesheet.length - 1)
-				.join('\n')
-		).css;
-
 		dirStylesheets.push(
-			`${splittedStylesheet[0]}${minifyStylesheet}${
-				splittedStylesheet[splittedStylesheet.length - 1]
-			}`
+			minifyCSS(
+				readFileSync(
+					`./src/static/views/${dir}/stylesheets/${stylesheet}`
+				).toString()
+			).css
 		);
 	});
 
@@ -89,12 +79,7 @@ router.post('/', (req, res) => {
 		(potentialMatch) => potentialMatch.result !== null
 	);
 
-	if (!match) {
-		match = {
-			route: routes.find((routeFind) => routeFind.path == '/404'),
-			result: [pathname]
-		};
-	}
+	if (!match) return res.status(404).send('404: Not found.');
 
 	const route = match.route;
 
@@ -120,6 +105,10 @@ router.post('/', (req, res) => {
 		css: route.stylesheets,
 		js: route.scripts
 	});
+});
+
+router.get('/routes', (req, res) => {
+	res.json(routes.map((mapRoute) => mapRoute.path));
 });
 
 module.exports = router;

@@ -2005,6 +2005,7 @@ __metadata:
     firebase: ^9.6.1
     firebase-admin: ^10.0.1
     git-cz: ^4.8.0
+    hcaptcha: ^0.1.0
     html-minifier: ^4.0.0
     husky: ^7.0.4
     jsonwebtoken: ^8.5.1
@@ -3603,6 +3604,13 @@ __metadata:
   version: 0.2.4
   resolution: "hash-stream-validation@npm:0.2.4"
   checksum: a5633e6ece2f729729d7061274900b10b035d6b011bfffc9503440c4279cacb53eb461ad96c8c90bb6b5368d896833a06b924a7a1abdbad46a8a5434e0c17a64
+  languageName: node
+  linkType: hard
+
+"hcaptcha@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "hcaptcha@npm:0.1.0"
+  checksum: 86f534604412755b8be9eb842fd381ed84c41d111b8951fb3bb1df68cd01bd32e9d6dda879ed42c0e6495c9c027f7596f51ef8159281583d34338e6f359bbd9d
   languageName: node
   linkType: hard
 

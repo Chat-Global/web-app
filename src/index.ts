@@ -18,7 +18,7 @@ admin.initializeApp({
 const app = express();
 const server = createServer(app);
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 // Settings
 app.set('port', port);
@@ -47,6 +47,10 @@ app.use('/api/spa', require('./api/spa'));
 // Robots
 app.get('/robots.txt', (req: any, res: any): void => {
 	res.sendFile('robots.txt', { root: join(__dirname, './static/other/') });
+});
+
+app.get('/', (req: any, res: any): void => {
+	res.redirect('/interchat/es');
 });
 
 app.get('/logout', (req: any, res: any): void => {

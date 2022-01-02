@@ -1,6 +1,0 @@
-{
-    "path": "/404",
-    "body": "index.ts",
-    "stylesheets": ["style.html"],
-    "scripts": ["script.html"]
-}

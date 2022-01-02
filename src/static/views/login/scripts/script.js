@@ -1,12 +1,53 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable no-undef */
 $(() => {
-	document.title = 'Log in';
-	$('#error_notification').css('display', 'none');
+	function showErrorNotification(html) {
+		$('#login_button').removeAttr('disabled');
+		$('#error_notification').removeClass('hidden');
+		$('#error_notification_text').html(html);
+	}
+
+	function hideErrorNotification() {
+		$('#login_button').attr('disabled', 'disabled');
+		$('#error_notification').addClass('hidden');
+		$('#error_notification_text').html('');
+	}
+
+	document.title = 'Chat Global Login';
+
+	tsParticles
+		.loadJSON('particles-container', '/assets/particles.json')
+		.catch((error) => {
+			console.error(error);
+		});
+
 	$('#login').submit((event) => {
 		event.preventDefault();
+		hideErrorNotification();
 
-		$('#login_button').attr('disabled', 'disabled');
+		const { email, password } = event.target;
+
+		if (!email.value || !email.value.trim()) {
+			showErrorNotification('Debes introducir un correo electrónico.');
+			return false;
+		}
+
+		if (!password.value || !password.value.trim()) {
+			showErrorNotification('Debes introducir una contraseña.');
+			return false;
+		}
+
+		if (password.value.trim().length < 8) {
+			showErrorNotification(
+				'La contraseña debe tener al menos 8 caracteres.'
+			);
+			return false;
+		}
+
+		if (!$('[name=h-captcha-response]').val()) {
+			showErrorNotification('Debes responder el captcha.');
+			return false;
+		}
 
 		$.ajax({
 			type: 'POST',
@@ -18,8 +59,9 @@ $(() => {
 			contentType: 'application/json',
 			data: JSON.stringify({
 				credentials: {
-					login: event.target.email.value,
-					password: event.target.password.value
+					login: email.value.trim(),
+					password: password.value.trim(),
+					captchaToken: $('[name=h-captcha-response]').val()
 				}
 			}),
 			success: (resp) => {
@@ -37,22 +79,16 @@ $(() => {
 				}
 			},
 			error: (resp) => {
-				$('#login_button').removeAttr('disabled');
-				$('#error_notification').css('display', 'block');
-				$('#error_notification_text').html(
-					`${
-						resp &&
+				hcaptcha.reset();
+				showErrorNotification(
+					resp &&
 						resp.responseJSON &&
 						resp.responseJSON.messages &&
 						resp.responseJSON.messages.length > 0
-							? resp.responseJSON.messages
-									.map(
-										(message) =>
-											`<strong>${message}</strong>`
-									)
-									.join('<br>')
-							: 'Error al obtener la respuesta del servidor.'
-					}`
+						? resp.responseJSON.messages
+								.map((message) => `<strong>${message}</strong>`)
+								.join('<br>')
+						: 'Error al obtener la respuesta del servidor.'
 				);
 			}
 		});

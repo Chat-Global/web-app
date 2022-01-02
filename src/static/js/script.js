@@ -6,14 +6,15 @@ const navigateTo = (url) => {
 
 const router = async () => {
 	const data = await getHTML(location.pathname);
-	document.getElementById('app').innerHTML = `${data.html}${data.css.join(
-		''
-	)}`;
+	document.getElementById('app').innerHTML = `${data.html}${data.css
+		.map((stylesheet) => `<style>${stylesheet}</style>`)
+		.join('')}`;
 	data.js.forEach((code) => {
 		const script = document.createElement('script');
 		script.innerHTML = code;
 		document.body.appendChild(script);
 	});
+	twemoji.parse(document.body);
 };
 
 const getHTML = async (pathname) => {

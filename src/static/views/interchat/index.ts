@@ -79,6 +79,8 @@ module.exports = (ctx: any): string => {
                 <div class="card h-100" id="interchat-panel-card">
                     <div class="card-body">
                         <form id="message-form" action="">
+                            <div id="emojis">
+                            </div>
                             <div id="message-panel">
                                 <div id="attachments-div">
                                     <div class="icon-container">

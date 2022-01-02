@@ -1,6 +1,6 @@
 {
     "path": "/login",
     "body": "index.ts",
-    "stylesheets": ["style.html"],
-    "scripts": ["script.js"]
+    "stylesheets": ["style.css"],
+    "scripts": ["script.js", "captcha.js"]
 }

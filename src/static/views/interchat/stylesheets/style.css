@@ -1,0 +1,441 @@
+@keyframes messageFade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--main-bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-opacity-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-color);
+}
+
+::-webkit-scrollbar-opacity-color {
+    background: var(--scrollbar-opacity-color);
+}
+
+::-webkit-scrollbar-opacity-color:hover {
+    background: var(--scrollbar-color);
+}
+
+body {
+    background-color: var(--main-bg-color);
+    scrollbar-color: var(--scrollbar-color) transparent;
+    color: var(--main-text-color);
+    font-size: 18px;
+    font-family: 'Quicksand', sans-serif;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+html {
+    overflow-y: hidden;
+}
+
+.main-cards {
+    font-size: 0;
+}
+
+.main-card {
+    font-size: 18px;
+    white-space: normal;
+    display: inline-block;
+    vertical-align: top;
+    height: 100vh !important;
+    background-color: var(--main-bg-color);
+    border-radius: 0%;
+    border: hidden;
+    overflow: auto;
+}
+
+.no-border-radius {
+    border-radius: 0%;
+}
+
+.full-size {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.interchat-bar-icon {
+    font-size: 1.2vw;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    color: #ffffff90;
+    transition: color 0.3s;
+}
+
+.interchat-bar-icon:hover {
+    color: #ffffff;
+}
+
+#interchats-card {
+    width: 5%;
+    background-color: var(--main-bg-color);
+}
+
+.interchats-body {
+    padding: 0px;
+    text-align: center !important;
+}
+
+.interchat-logo {
+    display: inline-block !important;
+    margin: 10px auto !important;
+    border-radius: 50%;
+    width: 3.2vw;
+    height: 3.2vw;
+    outline-style: solid;
+    outline-width: 4px;
+    outline-color: transparent;
+    transition: outline-color 0.4s;
+}
+
+.interchat-logo:hover {
+    outline-color: #ffffff40;
+}
+
+.interchat-logo-img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.avatar-container {
+    width: 3vw;
+    height: 3vw;
+    margin: 8px 8px 8px 25px;
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+}
+
+.message-container {
+    display: inline-block;
+    vertical-align: top;
+    padding: 8px 8px 8px 100px;
+    max-width: 100%;
+}
+
+.chat-badge {
+    background-color: var(--accent-color) !important;
+    font-size: 10px;
+}
+
+.interchat-message-avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.interchat-active {
+    outline-color: #ffffff25;
+}
+
+#interchat-menu-card {
+    width: 15%;
+    background-color: #282d30;
+}
+
+.interchat-banner {
+    height: 140px;
+    object-fit: cover;
+}
+
+#interchat-messages-panel-card {
+    width: 65%;
+    background-color: var(--secondary-bg-color);
+}
+
+#messages-box {
+    padding: 0;
+}
+
+#message-form {
+    height: 100%;
+    width: 100%;
+    padding: 0.2vw 0;
+    text-align: center !important;
+}
+
+#message-panel {
+    background-color: var(--secondary-bg-color);
+    height: 80%;
+    width: 100%;
+    border-radius: 2rem;
+}
+
+#attachments-div {
+    height: 100%;
+    width: 5%;
+    display: inline-table;
+}
+
+.icon-container {
+    height: 100%;
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#message-input-box {
+    height: 100%;
+    width: 80%;
+    margin: auto;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#message-input {
+    height: 100%;
+    width: 100%;
+    border: none;
+    padding: 0 1rem;
+    background-color: transparent;
+    color: #fff
+}
+
+#emojis-div {
+    height: 100%;
+    width: 5%;
+    display: inline-table;
+    vertical-align: top;       
+}
+
+#send-div {
+    height: 100%;
+    width: 5%;
+    display: inline-table;
+    vertical-align: top;  
+}
+
+#message-input:focus { 
+    outline: none;
+}
+
+#interchat-messages { 
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0;
+}
+
+#interchat-messages-card {
+    height: 90% !important;
+    background-color: var(--secondary-bg-color);
+    border-radius: 0%;
+    border: hidden;
+    overflow: auto;
+}
+
+#interchat-panel-card {
+    height: 10% !important;
+    background-color: var(--main-bg-color);
+    border-radius: 0%;      
+    border: hidden;     
+    overflow: auto;
+}
+
+#interchat-members-card {
+    width: 30%;
+    background-color: #282d30;
+}
+
+.interchat-message {
+    width: 100%;
+    animation: 0.5s ease-out 0s 1 messageFade;
+    transition: background-color 0.3s;
+}
+
+.interchat-message:hover {
+    background-color: #00000015;
+}
+
+.user-name {
+    font-size: medium;
+    color: #fff;
+}
+
+.message-date {
+    font-size: small;
+    color: #c9c9c9
+}
+
+@media only screen and (max-height: 650px) {
+    #interchat-messages-card {
+        height: 80% !important;
+    }
+
+    #interchat-panel-card {
+        height: 20% !important;
+    }
+}
+
+@media only screen and (max-width: 1400px) {
+
+    .avatar-container {
+        width: 5vw;
+        height: 5vw;
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+    .interchat-bar-icon {
+        font-size: 1.5vw;
+    }
+
+    #interchat-menu-card {
+        width: 20%;
+    }
+
+    #interchat-messages-panel-card {
+        width: 55%;
+    }
+
+    #interchat-members-card {
+        width: 40%;
+    }
+
+    #attachments-div {
+        width: 10%;
+    }
+
+    #message-input-box {
+        width: 60%;
+    }
+
+    #emojis-div {
+        width: 10%;    
+    }
+    
+    #send-div {
+        width: 10%;
+    }
+}
+@media only screen and (max-width: 1000px) {
+
+
+    .avatar-container {
+        width: 5vw;
+        height: 5vw;
+    }
+
+    body {
+        font-size: 12px;
+    }
+
+    .interchat-bar-icon {
+        font-size: 1.5vw;
+    }
+
+    #interchat-menu-card {
+        width: 20%;
+    }
+
+    #interchat-messages-panel-card {
+        width: 55%;
+    }
+
+    #interchat-members-card {
+        width: 40%;
+    }
+
+    #attachments-div {
+        width: 10%;
+    }
+
+    #message-input-box {
+        width: 60%;
+    }
+
+    #emojis-div {
+        width: 10%;    
+    }
+    
+    #send-div {
+        width: 10%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+
+    body {
+        overflow-x: scroll;
+        font-size: 8px;
+    }
+
+    .avatar-container {
+        width: 9vw;
+        height: 9vw;
+    }
+
+    .interchat-bar-icon {
+        font-size: 4vw;
+    }
+    
+    #interchats-card {
+        width: 15%;
+    }
+    
+    .interchats-body {
+        padding: 1.8vw;
+    }
+
+    .interchat-logo {
+        width: 11vw;
+        height: 11vw;
+    }
+
+    .interchat-indicator {
+        width: 4vw;
+    }
+
+    #interchat-menu-card {
+        width: 55%;
+    }
+
+    #interchat-messages-panel-card {
+        width: 100%;
+    }
+
+    #interchat-members-card {
+        width: 55%;
+    }
+}
+
+
+@media only screen and (max-width: 450px) {
+
+    body {
+        font-size: 5px !important;
+    }
+
+    .avatar-container {
+        width: 15vw;
+        height: 15vw;
+    }
+}
