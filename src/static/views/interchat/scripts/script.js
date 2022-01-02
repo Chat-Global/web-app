@@ -125,5 +125,20 @@
 			);
 	};
 
+	const checkConnection = () => {
+		if (!socket.connected) {
+			sendNotification(
+				'WARN',
+				'No se ha podido establecer conexión con el servidor.'
+			);
+		}
+	};
+
+	setInterval(checkConnection, 5000);
+
 	socket.on('MESSAGE_CREATE', messageFunction);
+
+	socket.on('error', console.error);
+
+	socket.on('disconnect', console.log);
 })();

@@ -54,4 +54,48 @@ document.addEventListener('DOMContentLoaded', async () => {
 	}, 2000);
 });
 
+const sendNotification = (type, message) => {
+	const colors = {
+		primary: '#5865F2',
+		success: '#57F287',
+		error: '#ED4245',
+		warn: '#EB8634'
+	};
+
+	const notificationContainer = document.getElementById(
+		'notification-container'
+	);
+
+	const notificationID = `notification-${type.toLowerCase()}-${new Date().getTime()}-${Math.random()}`;
+
+	notificationContainer.insertAdjacentHTML(
+		'beforeend',
+		/* html */ `
+			<div class="toast align-items-center text-white border-0" role="alert" style="background-color: ${
+				colors[type.toLowerCase()]
+			};" aria-live="assertive" aria-atomic="true" id="${notificationID}">
+				<div class="d-flex">
+					<div class="toast-body" style="white-space: initial;">
+						${message}
+					</div>
+					<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+				</div>
+			</div>
+		`
+	);
+
+	const toastElement = document.getElementById(notificationID);
+
+	const toast = new bootstrap.Toast(toastElement);
+
+	toast.show();
+
+	console.log(
+		`%cChatGlobalNotificationHandler => [${type.toUpperCase()}] ${message}`,
+		`background-color: ${colors[type.toLowerCase()]};`
+	);
+
+	return toast;
+};
+
 const connections = [];
