@@ -1,19 +1,13 @@
 export {};
 require('dotenv').config();
 const csrf = require('csurf');
+const axios = require('axios');
 const morgan = require('morgan');
 const { join } = require('path');
 const express = require('express');
-const admin = require('firebase-admin');
 const { createServer } = require('http');
 const { mw: reqIPMW } = require('request-ip');
 const cookieParser = require('cookie-parser');
-
-const serviceAccount = JSON.parse(process.env.cert);
-
-admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount)
-});
 
 const app = express();
 const server = createServer(app);
@@ -72,22 +66,33 @@ app.get('/register', (req: any, res: any): void => {
 
 // SPA File
 app.get('/*', async (req: any, res: any): Promise<void> => {
-	const sessionCookie = req.cookies.session || '';
+	const token = req.cookies.token || '';
 
-	const userData = await admin
-		.auth()
-		.verifySessionCookie(sessionCookie, true)
-		.catch(() => false);
+	if (!token) return res.redirect('/login');
 
-	if (userData) {
-		console.log('Logged in:', userData.email);
+	if (!token.includes('.')) return res.redirect('/login');
 
-		res.sendFile('index.html', {
-			root: join(__dirname, './static/html/')
-		});
-	} else {
-		res.redirect('/login');
-	}
+	if (token.split('.').length !== 3) return res.redirect('/login');
+
+	const user = token.split('.')[0];
+
+	if (!user) return res.redirect('/login');
+
+	const userData = await axios({
+		method: 'post',
+		url: `https://accounts.chatglobal.ml/authorize/user/${user}`,
+		headers: {
+			authorization: token
+		}
+	}).catch((): boolean => false);
+
+	if (!userData) return res.redirect('/login');
+
+	console.log('Logged in:', userData);
+
+	res.sendFile('index.html', {
+		root: join(__dirname, ' bn ./static/html/')
+	});
 });
 
 // Iniciando el servidor

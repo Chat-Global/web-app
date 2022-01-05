@@ -29,8 +29,8 @@ const getParams = (match) => {
 
 const routes = [];
 
-for (const dir of readdirSync('./src/static/views')) {
-	const dirConfig = require(`../static/views/${dir}/config.json`);
+for (const dir of readdirSync('./src/views')) {
+	const dirConfig = require(`../views/${dir}/config.json`);
 
 	const dirStylesheets = [];
 
@@ -40,7 +40,7 @@ for (const dir of readdirSync('./src/static/views')) {
 		dirStylesheets.push(
 			minifyCSS(
 				readFileSync(
-					`./src/static/views/${dir}/stylesheets/${stylesheet}`
+					`./src/views/${dir}/stylesheets/${stylesheet}`
 				).toString()
 			).css
 		);
@@ -49,9 +49,7 @@ for (const dir of readdirSync('./src/static/views')) {
 	dirConfig.scripts.forEach((script) => {
 		dirScripts.push(
 			minifyJS(
-				readFileSync(
-					`./src/static/views/${dir}/scripts/${script}`
-				).toString()
+				readFileSync(`./src/views/${dir}/scripts/${script}`).toString()
 			).code
 		);
 	});
@@ -85,7 +83,7 @@ router.post('/', (req, res) => {
 
 	const params = getParams(match);
 
-	const body = require(`../static/views/${route.dir}/${route.body}`)({
+	const body = require(`../views/${route.dir}/${route.body}`)({
 		pathname: pathname,
 		route: route,
 		params: params

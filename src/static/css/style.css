@@ -11,12 +11,13 @@
 :root {
   --accent-color: #5865F2;
   --accent-opacity-color: #5865f2cc;
-  --main-text-color: #f5f5f5;
-  --muted-text-color: #a0a0a0; 
+  --main-text-color: #dcddde;
+  --muted-text-color: #72767d; 
   --main-bg-color: #23272a;
   --secondary-bg-color: #2c2f34;
   --scrollbar-color: #36393f;
   --scrollbar-opacity-color: #36393f80;
+  --main-font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #load-screen {

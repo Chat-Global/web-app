@@ -18,6 +18,7 @@
 
 	const socket = io('wss://gateway.chatglobal.ml', {
 		auth: {
+			interchat: 'es',
 			token: localStorage.getItem('token')
 		}
 	});
@@ -69,9 +70,7 @@
 	const addEmojis = async (event) => {
 		event.preventDefault();
 
-		$('#emojis').disMojiPicker();
 		twemoji.parse(document.body);
-		$('#emojis').picker((emoji) => console.log(emoji));
 
 		console.log('Emoji');
 	};
@@ -92,8 +91,30 @@
 	emojisButton.addEventListener('click', addEmojis);
 	submitButton.addEventListener('click', sendMessage);
 
-	const messageFunction = (msg) => {
-		const messageHTML = /*html*/ `
+	const isToday = (someDate) => {
+		const today = new Date();
+		return (
+			someDate.getDate() == today.getDate() &&
+			someDate.getMonth() == today.getMonth() &&
+			someDate.getFullYear() == today.getFullYear()
+		);
+	};
+
+	const zeroPad = (number) => {
+		return number.toString().padStart(2, '0');
+	};
+
+	const getMessageHTML = (msg) => {
+		const messageDate = new Date(msg.timestamp);
+
+		const hours = zeroPad(messageDate.getHours());
+		const minutes = zeroPad(messageDate.getMinutes());
+
+		const day = zeroPad(messageDate.getDate());
+		const month = zeroPad(messageDate.getMonth() + 1);
+		const year = zeroPad(messageDate.getFullYear());
+
+		return /*html*/ `
 			<div class="interchat-message">
 				<div class="avatar-container">
 					<img src="${msg.author.avatar}" class="interchat-message-avatar">
@@ -104,14 +125,22 @@
 			msg.author.system
 				? ' <span class="badge bg-primary chat-badge">SISTEMA</span>'
 				: ''
-		} <span class="message-date">hoy a las 19:34</span></h5>
+		} <span class="message-date">${
+			isToday(messageDate)
+				? `hoy a las ${hours}:${minutes}`
+				: `${day}/${month}/${year}`
+		}</span></h5>
 					</div>
 					<div class="content-container">
-						<div>${msg.content}</div>
+						<div class="message-content">${msg.content}</div>
 					</div>
 				</div>
 			</div>
 		`;
+	};
+
+	const createMessage = (msg) => {
+		const messageHTML = getMessageHTML(msg);
 
 		document
 			.getElementById('interchat-messages')
@@ -126,17 +155,33 @@
 	};
 
 	const checkConnection = () => {
-		if (!socket.connected) {
+		if (
+			!socket.connected &&
+			connections[0] &&
+			socket.id === connections[0].id &&
+			connections[0].id !== undefined
+		) {
 			sendNotification(
 				'WARN',
-				'No se ha podido establecer conexión con el servidor.'
+				'No se ha podido establecer una conexión con el servidor.'
 			);
+
+			setTimeout(() => {
+				if (
+					!socket.connected &&
+					connections[0] &&
+					socket.id === connections[0].id &&
+					connections[0].id !== undefined
+				) {
+					window.location.reload();
+				}
+			}, 5000);
 		}
 	};
 
 	setTimeout(checkConnection, 5000);
 
-	socket.on('MESSAGE_CREATE', messageFunction);
+	socket.on('MESSAGE_CREATE', createMessage);
 
 	socket.on('error', console.error);
 

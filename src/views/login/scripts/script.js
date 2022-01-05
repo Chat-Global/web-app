@@ -65,13 +65,12 @@ $(() => {
 				}
 			}),
 			success: (resp) => {
-				localStorage.setItem('token', resp.token);
-				const sessionCookie = resp.sessionCookie;
-				Cookies.set(sessionCookie.name, sessionCookie.value, {
+				Cookies.set('token', resp.token, {
 					secure: true,
 					sameSite: 'lax',
 					expires: 5
 				});
+
 				if (resp.redirect) {
 					window.location.assign(resp.redirect);
 				} else {
