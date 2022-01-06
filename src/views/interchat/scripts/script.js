@@ -19,7 +19,7 @@
 	const socket = io('wss://gateway.chatglobal.ml', {
 		auth: {
 			interchat: 'es',
-			token: localStorage.getItem('token')
+			token: Cookies.get('token')
 		}
 	});
 

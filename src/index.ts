@@ -88,10 +88,10 @@ app.get('/*', async (req: any, res: any): Promise<void> => {
 
 	if (!userData) return res.redirect('/login');
 
-	console.log('Logged in:', userData);
+	console.log('Logged in:', userData.data);
 
 	res.sendFile('index.html', {
-		root: join(__dirname, ' bn ./static/html/')
+		root: join(__dirname, './static/html/')
 	});
 });
 
