@@ -48,7 +48,7 @@ app.get('/', (req: any, res: any): void => {
 });
 
 app.get('/logout', (req: any, res: any): void => {
-	res.clearCookie('session');
+	res.clearCookie('token');
 	res.redirect('/login');
 });
 
