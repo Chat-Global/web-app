@@ -167,9 +167,19 @@
 	};
 
 	const parseMessagesList = (messagesList) => {
-		for (const msg of messagesList) {
-			const message = getMessageHTML(msg);
-		}
+		const messageListHTML = messagesList
+			.map((message) => getMessageHTML(message))
+			.join('');
+
+		document.getElementById('interchat-messages').innerHTML =
+			messageListHTML;
+
+		document
+			.getElementById('interchat-messages-card')
+			.scrollTo(
+				0,
+				document.getElementById('interchat-messages-card').scrollHeight
+			);
 	};
 
 	const getMemberHTML = (member) => {
