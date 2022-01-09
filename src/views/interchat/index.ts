@@ -32,7 +32,7 @@ module.exports = (ctx: any): string => {
 	);
 
 	return /*html*/ `
-        <div class="main-cards">
+        <div class="main-cards" id="current-interchat" interchat-id="${activeInterchatID}">
             <aside class="card h-100 main-card" id="interchats-card" aria-label="Interchats">
                 <div class="interchats-body">
                     ${interchats
@@ -108,7 +108,9 @@ module.exports = (ctx: any): string => {
             <aside class="card h-100 main-card" id="interchat-members-card" aria-label="Miembros">
                 <div class="card-body">
                     <p class="card-title">Miembros online</p>
-                    <p class="card-text">Sin miembros conectados.</p>
+                    <div id="members-online" class="row row-cols-1 g-2">
+                        <p class="card-text">Sin miembros online.</p>
+                    </div>
                 </div>
             </aside>
         </div>

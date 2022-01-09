@@ -286,8 +286,37 @@ html {
 }
 
 #interchat-members-card {
-    width: 30%;
+    width: 15%;
     background-color: #282d30;
+}
+
+.member-card {
+    width: 100%;
+    padding: 0px;
+    border-radius: 10px;
+    background-color: var(--main-bg-color);
+    transition: background-color 0.3s;
+}
+
+.member-card:hover {
+    background-color: var(--main-bg-color-hover);
+}
+
+.member-card-body {
+    padding: 8px;
+}
+
+.member-avatar {
+    float: left;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.member-name {
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 
@@ -325,7 +354,7 @@ html {
     }
 
     #interchat-members-card {
-        width: 40%;
+        width: 20%;
     }
 
     #attachments-div {
@@ -369,7 +398,7 @@ html {
     }
 
     #interchat-members-card {
-        width: 40%;
+        width: 20%;
     }
 
     #attachments-div {

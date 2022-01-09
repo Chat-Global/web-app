@@ -18,7 +18,9 @@
 
 	const socket = io('wss://gateway.chatglobal.ml', {
 		auth: {
-			interchat: 'es',
+			interchat: document
+				.getElementById('current-interchat')
+				.getAttribute('interchat-id'),
 			token: Cookies.get('token')
 		}
 	});
@@ -94,9 +96,9 @@
 	const isToday = (someDate) => {
 		const today = new Date();
 		return (
-			someDate.getDate() == today.getDate() &&
-			someDate.getMonth() == today.getMonth() &&
-			someDate.getFullYear() == today.getFullYear()
+			someDate.getDate() === today.getDate() &&
+			someDate.getMonth() === today.getMonth() &&
+			someDate.getFullYear() === today.getFullYear()
 		);
 	};
 
@@ -139,21 +141,6 @@
 		`;
 	};
 
-	const createMessage = (msg) => {
-		const messageHTML = getMessageHTML(msg);
-
-		document
-			.getElementById('interchat-messages')
-			.insertAdjacentHTML('beforeend', messageHTML);
-
-		document
-			.getElementById('interchat-messages-card')
-			.scrollTo(
-				0,
-				document.getElementById('interchat-messages-card').scrollHeight
-			);
-	};
-
 	const checkConnection = () => {
 		if (
 			!socket.connected &&
@@ -179,9 +166,77 @@
 		}
 	};
 
+	const parseMessagesList = (messagesList) => {
+		for (const msg of messagesList) {
+			const message = getMessageHTML(msg);
+		}
+	};
+
+	const getMemberHTML = (member) => {
+		return /*html*/ `
+			<div class="col" id="member-${member.id}">
+				<div class="card member-card h-100">
+					<div class="card-body member-card-body">
+						<div class="members-container">
+							<img src="${member.avatar}" class="member-avatar" alt="Avatar"> 
+							<span class="card-text member-name">${member.username}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		`;
+	};
+
+	const createMessage = (msg) => {
+		const messageHTML = getMessageHTML(msg);
+
+		document
+			.getElementById('interchat-messages')
+			.insertAdjacentHTML('beforeend', messageHTML);
+
+		document
+			.getElementById('interchat-messages-card')
+			.scrollTo(
+				0,
+				document.getElementById('interchat-messages-card').scrollHeight
+			);
+	};
+
+	const handleMessageUpdate = (type, member) => {
+		/* */
+	};
+
+	const parseMembersList = (memberList) => {
+		const membersListHTML = memberList
+			.map((member) => getMemberHTML(member))
+			.join('');
+
+		document.getElementById('members-online').innerHTML = membersListHTML;
+	};
+
+	const handleMemberUpdate = (type, member) => {
+		if (type === 'connect') {
+			if (!document.getElementById(`member-${member.id}`))
+				document
+					.getElementById('members-online')
+					.insertAdjacentHTML('beforeend', getMemberHTML(member));
+		} else if (type === 'disconnect') {
+			if (document.getElementById(`member-${member.id}`))
+				document.getElementById(`member-${member.id}`).remove();
+		}
+	};
+
 	setTimeout(checkConnection, 5000);
 
+	socket.on('MESSAGES_LIST', parseMessagesList);
+
 	socket.on('MESSAGE_CREATE', createMessage);
+
+	socket.on('MESSAGE_UPDATE', handleMessageUpdate);
+
+	socket.on('MEMBERS_LIST', parseMembersList);
+
+	socket.on('MEMBER_UPDATE', handleMemberUpdate);
 
 	socket.on('error', console.error);
 
