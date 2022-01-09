@@ -44,13 +44,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 		}
 	});
 
-	$('#app').css('display', 'none');
+	document.getElementById('app').style.display = 'none';
 
 	await router();
 
 	setTimeout(() => {
-		$('#app').css('display', 'block');
-		$('#load-screen').remove();
+		document.getElementById('app').style.display = 'block';
+		document.getElementById('load-screen').remove();
 	}, 2000);
 });
 
