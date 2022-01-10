@@ -7,7 +7,7 @@ const navigateTo = (url) => {
 const getHTML = async (pathname) => {
 	return new Promise((resolve, reject) => {
 		fetch('/api/spa', {
-			method: 'POST', // or 'PUT'
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
