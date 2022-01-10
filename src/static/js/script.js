@@ -4,6 +4,25 @@ const navigateTo = (url) => {
 	router();
 };
 
+const getHTML = async (pathname) => {
+	return new Promise((resolve, reject) => {
+		fetch('/api/spa', {
+			method: 'POST', // or 'PUT'
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ pathname: pathname })
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				return resolve(data);
+			})
+			.catch((error) => {
+				return reject(error);
+			});
+	});
+};
+
 const router = async () => {
 	const data = await getHTML(location.pathname);
 	document.getElementById('app').innerHTML = `${data.html}${data.css
@@ -15,22 +34,6 @@ const router = async () => {
 		document.body.appendChild(script);
 	});
 	twemoji.parse(document.body);
-};
-
-const getHTML = async (pathname) => {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-			url: '/api/spa',
-			type: 'POST',
-			data: { pathname: pathname },
-			success: (data) => {
-				resolve(data);
-			},
-			error: (error) => {
-				reject(error);
-			}
-		});
-	});
 };
 
 window.addEventListener('popstate', router);
